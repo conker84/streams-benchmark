@@ -1,0 +1,20 @@
+{
+  "name": "neo4j-sink",
+  "config": {
+    "key.converter": "org.apache.kafka.connect.storage.StringConverter",
+    "value.converter": "org.apache.kafka.connect.json.JsonConverter",
+    "value.converter.schemas.enable": false,
+    "topics": "benchmark",
+    "connector.class": "streams.kafka.connect.sink.Neo4jSinkConnector",
+    "errors.retry.timeout": "-1",
+    "errors.retry.delay.max.ms": "1000",
+    "errors.tolerance": "all",
+    "errors.log.enable": true,
+    "errors.log.include.messages": true,
+    "neo4j.server.uri": "bolt://neo4j:7687",
+    "neo4j.authentication.basic.username": "neo4j",
+    "neo4j.authentication.basic.password": "benchmark",
+    "neo4j.batch.size": 40000,
+    "neo4j.topic.cypher.benchmark": "MERGE (tx:TxStr {txId: event.data[0].txId}) SET tx.finalTimestamp = timestamp() MERGE (c:CustomerStr {custId: event.data[0].custId}) MERGE (tx)-[:FROM_CUST]->(c)"
+  }
+}
