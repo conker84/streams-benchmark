@@ -2,7 +2,7 @@ version: '3'
 
 services:
   neo4j:
-    image: neo4j:3.5.21-enterprise
+    image: neo4j:4.1.2-enterprise
     hostname: neo4j
     container_name: neo4j
     ports:
@@ -99,11 +99,11 @@ services:
       CONNECT_ZOOKEEPER_CONNECT: 'zookeeper:2181'
       CONNECT_PLUGIN_PATH: /usr/share/java,/tmp/connect-plugins,/usr/share/confluent-hub-components
       CONNECT_LOG4J_LOGGERS: org.apache.zookeeper=DEBUG,org.I0Itec.zkclient=DEBUG,org.reflections=ERROR,org.apache.kafka.connect.transforms
-    # volumes:
-    #   - ./connect-plugins:/tmp/connect-plugins
-    command: 
-      - bash 
-      - -c 
-      - |
-        confluent-hub install --no-prompt neo4j/kafka-connect-neo4j:1.0.9
-        /etc/confluent/docker/run
+    volumes:
+      - ./connect-plugins:/tmp/connect-plugins
+    # command: 
+    #   - bash
+    #   - -c 
+    #   - |
+    #     confluent-hub install --no-prompt neo4j/kafka-connect-neo4j:1.0.9
+    #     /etc/confluent/docker/run

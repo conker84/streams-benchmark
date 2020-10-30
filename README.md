@@ -101,6 +101,34 @@ curl -X POST localhost:8083/connectors \
     -d @connect.neo4.non-parallelized.json
 ```
 
+#### How to test the Kafka Connect sink Beta
+
+In the Docker Compose file, under the `connect` service please replace these lines:
+
+```yml
+    # volumes:
+    #   - ./connect-plugins:/tmp/connect-plugins
+    command: 
+      - bash
+      - -c 
+      - |
+        confluent-hub install --no-prompt neo4j/kafka-connect-neo4j:1.0.9
+        /etc/confluent/docker/run
+```
+
+with these:
+
+```yml
+    volumes:
+      - ./connect-plugins:/tmp/connect-plugins
+    # command: 
+    #   - bash
+    #   - -c 
+    #   - |
+    #     confluent-hub install --no-prompt neo4j/kafka-connect-neo4j:1.0.9
+    #     /etc/confluent/docker/run
+```
+
 ### Test with a simple kafka consumer
 
 Run:
